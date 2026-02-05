@@ -1,0 +1,102 @@
+<html>
+  <head>
+    <style>
+    body{background-color:black;}
+      #bird{
+        height:50px;
+        width: 50px;
+        position: absolute;
+        top: 400px;
+        left: 30px;
+        border:1px solid white;
+      }
+      #wallone{
+        height: 200px;
+        width: 50px;
+        border:1px solid  white;
+        position: absolute;
+        left: 500px;
+      }
+      #walltwo{
+        height: 150px;
+        width: 50px;
+        border:1px solid white;
+        position: absolute;
+        top: 365px;
+        left: 600px;
+      }button{
+        margin-bottom: 0px;
+        background-color: black;
+        color: white;
+        border: 1px solid white;
+        padding: 20px;
+      }
+      #bdy{
+        height: 500px;
+        width: 600px;
+        position:relative;
+        overflow: hidden;
+        border: 1px solid white;
+      }label{
+        position: absolute;
+        left: 100px;
+        color: white;
+        font-size:15px;
+        font-family: monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="bdy">
+      <label id="label">score : 0</label>
+    <div id="bird"></div>
+    <div id="wallone"></div>
+    <div id="walltwo"></div>
+    <button id="jump">JUMP</button></div>
+    <script>
+      var bird = document.getElementById('bird');
+      var button = document.getElementById('jump');
+      var wall1 = document.getElementById('wallone');
+      var label = document.getElementById('label');
+      var wall2 = document.getElementById('walltwo');
+      var wallx = 200;
+      var passed = false;
+      var speed = 3;
+      var birdtop = 400;
+      var gravity = 2;
+      var count = 0;
+      button.onclick = function(){
+        birdtop-=80;
+        bird.style.top = birdtop + 'px';
+      }
+      setInterval(function(){
+        birdtop += gravity;
+        bird.style.top = birdtop + 'px';
+        wallx -= speed;
+        if(wallx < -50){
+          wallx = 600;
+          passed = false;
+        }
+        wall1.style.left = wallx + 'px';
+        wall2.style.left = wallx + 'px';
+           var b = bird.getBoundingClientRect();
+   var w1 = wall1.getBoundingClientRect();
+   var w2 = wall2.getBoundingClientRect();
+   if ((b.right > w1.left && b.left < w1.right && b.top < w1.bottom && b.bottom > w1.top) ||
+  (b.right > w2.left && b.left < w2.right && b.top < w2.bottom && b.bottom > w2.top) ||
+  (birdtop > 450 || birdtop < 0)) {
+  count = 0;
+  label.textContent = 'score : ' + count;
+  birdtop = 200;
+  wallx = 600;
+  passed = false;
+}
+   else if (b.left > w1.right && passed == false) {
+     count++;
+     label.textContent = 'score : ' + count;
+     passed = true;
+   }
+   }, 25);
+   </script>
+  </body>
+</html>
